@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Login and Registration</title>
+    <style>
+        div.wrapper {
+            width: 1000px;
+        }
+        div.registerdiv {
+            border: 2px solid black;
+            padding: 25px;
+            width: 420px;
+            height: 200px;
+            display:inline-block;
+            vertical-align: top;
+        }
+        div.logindiv {
+            border: 2px solid black;
+            padding: 25px;
+            display:inline-block;
+            width: 420px;
+            height: 200px;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <a href="/wish/dashboard">Home</a> |  
+                {% if request.session.user.username %}
+                    {{request.session.user.username}} is logged in | 
+                {% endif %}
+            <a href="/logout">Logout</a>
+        </div>
+        <h2>Welcome, please register or login.</h3>
+        <div class="registerdiv">
+            <h3 style="background:white;padding: 15px;margin-top:-45px; margin-left:-20px;width:60px;">Register</h4>
+            <form action="/register" method="POST">
+                <table>
+                    {% csrf_token %}
+                    <tr>
+                        <td>Name: </th>
+                        <td><input type="text" size="40" name='name'></th>
+                    </tr>
+                    <tr>
+                        <td>Username: </td>
+                        <td><input type="text" size="40" name="username"></td>
+                    </tr>
+                    <tr>
+                        <td>Password: </td>
+                        <td><input type="password" size="40" name="password"></td>
+                    </tr>
+                    <tr>
+                        <td>Confirm PW: </td>
+                        <td><input type="password" size="40" name="confirmpw"></td>
+                    </tr>
+                </table>
+                <label for="datehiredid">Date Hired: </label><input id="datehiredid" type="date" name="datehired">
+                <button type="submit" style="padding:5px;margin-left:320px;">Register</button>
+            </form>
+            
+        </div>
+        <div class="logindiv">
+            <h3 style="background:white;padding: 15px;margin-top:-45px; margin-left:-20px;width:45px;">Login</h4>
+            <form action="/login" method="POST">
+                <table>
+                        {% csrf_token %}
+                    <tr>
+                        <td>Username: </td>
+                        <td><input type="text" size="40" name="username"></td>
+                    </tr>
+                    <tr>
+                        <td>Password: </td>
+                        <td><input type="password" size="40" name="password"></td>
+                    </tr>
+                </table>
+                <button type="submit" style="padding:5px;margin-left: 320px;">Login</button>
+            </form>
+        </div>
+        <div>
+            {% if messages %}
+            <h3 style="color:red;">Errors</h3>
+                {% for message in messages %}
+                <p style="color:red;">{{message}}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>

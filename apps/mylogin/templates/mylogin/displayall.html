@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+    
+    <head>
+        <title>List of users</title>
+    </head>
+    
+    <body>
+        <div class="header">
+            <a href="/wish/dashboard">Home</a> |  
+                {% if request.session.user.username %}
+                    {{request.session.user.username}} is logged in | 
+                {% endif %}
+            <a href="/logout">Logout</a>
+        </div>
+        <table>
+            <tr>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Date hired</th>
+                <th>action</th>
+            </tr>
+            {% if allusers %}
+                {% for user in allusers %}
+                <tr>
+                    <td>{{user.id}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.datehired}}</td>
+                    <td><a href="delete/{{user.id}}">delete</a></td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+        <h3>User Logged In Data:</h3>
+        <P>id #: {{request.session.userid}}</P>
+        <p>Name: {{request.session.name}}</p>
+        <p>username: {{request.session.username}}</p>
+        <a href="/logout">Logout</a>
+    </body>
+
+</html>

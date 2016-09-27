@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Untitled Document</title>
+</head>
+<body>
+    <div class="header">
+        <a href="/wish/dashboard">Home</a> |  
+            {% if request.session.user.username %}
+                {{request.session.user.username}} is logged in | 
+            {% endif %}
+        <a href="/logout">Logout</a>
+    </div>
+    {% for item in allitems %}
+        {{item.name}} | {{item.created_at}} | {{item.FK_addedby.username}} | 
+    
+    <form style="display:inline;" action='/wish/deleteitem' method='POST'>
+        {% csrf_token %}
+        <input type="hidden" name="userid" value="{{request.session.userid}}">
+        <input type="hidden" name="itemid" value="{{item.id}}">
+        <button type="submit">Delete</button>
+    </form><br>
+    {% endfor %}
+
+</body>
+</html>

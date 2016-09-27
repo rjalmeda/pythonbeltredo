@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My Wish List</title>
+</head>
+<body>
+    <div class="header">
+        <a href="/wish/dashboard">Home</a> |  
+            {% if request.session.username %}
+                {{request.session.username}} is logged in | 
+            {% endif %}
+        <a href="/logout">Logout</a>
+    </div>
+    <h2>Hello, {{request.session.name}}!</h2>
+    
+    <h4>Your Wish List: </h4>
+    <table>
+        <thead style="border:2px solid black; background: lightgray;">
+            <tr>
+                <th>Item</th>
+                <th>Added By:</th>
+                <th>Date Added:</th>
+                <th>Action:</th>
+            </tr>
+        </thead>
+        <tbody style="border:2px solid black;">
+            {% for yourwisheditem in yourwisheditems %}
+            <tr>
+                <td><a href="/wish/wishitem/{{yourwisheditem.id}}">{{yourwisheditem.name}}</a></td>
+                <td>{{yourwisheditem.FK_addedby.name}}</td>
+                <td>{{yourwisheditem.created_at}}</td>
+                <td>
+                    <form style="display:inline;" action='/wish/deletewish' method='POST'>
+                        {% csrf_token %}
+                        <input type="hidden" name="userid" value="{{request.session.userid}}">
+                        <input type="hidden" name="itemid" value="{{yourwisheditem.id}}">
+                        <button type="submit">Remove from Wishlist</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td>your Items</td>
+            </tr>
+            {% for youritem in youritems %}
+            <tr>
+                <td><a href="/wish/wishitem/{{youritem.id}}">{{youritem.name}}</a></td>
+                <td>{{youritem.FK_addedby.name}}</td>
+                <td>{{youritem.created_at}}</td>
+                <td>
+                    <form style="display:inline;" action='/wish/deleteitem' method='POST'>
+                        {% csrf_token %}
+                        <input type="hidden" name="userid" value="{{request.session.userid}}">
+                        <input type="hidden" name="itemid" value="{{youritem.id}}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h4 style="margin-top:30px">Other User' Wish List:</h4>
+        <table>
+            <thead style="border:2px solid black; background: lightgray;">
+                <tr>
+                    <th>Item</th>
+                    <th>Added By</th>
+                    <th>Date Added</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for othersitem in othersitems %}
+                    <tr>
+                        <td><a href="/wish/wishitem/{{othersitem.id}}">{{othersitem.name}}</a></td>
+                        <td>{{othersitem.FK_addedby.name}}</td>
+                        <td>{{othersitem.created_at}}</td>
+                        <td>
+                            <form action='/wish/addwish' method='POST'>
+                                {% csrf_token %}
+                                <input type='hidden' name='userid' value="{{request.session.userid}}">
+                                <input type='hidden' name='itemid' value="{{othersitem.id}}">
+                                <input type="submit" value="Add to my Wishlist">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <a href="/wish/create"><button style="margin:40px 0px 0px 320px;">Add Item</button></a>
+    <div>
+        {% if messages %}
+        <h3>Messages</h3>
+            {% for message in messages %}
+            <p>{{message}}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>
