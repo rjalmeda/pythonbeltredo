@@ -6,16 +6,16 @@
 </head>
 <body>
     <div class="header">
-        <a href="/wish/dashboard">Home</a> |  
+        <a href="/wish/dashboard/">Home</a> |  
             {% if request.session.user.username %}
                 {{request.session.user.username}} is logged in | 
             {% endif %}
-        <a href="/logout">Logout</a>
+        <a href="/logout/">Logout</a>
     </div>
     {% for wish in allwishes %}
         {{wish.FK_item.name}} | {{wish.created_at}} | {{wish.FK_user.username}} | 
     
-    <form style="display:inline;" action='/wish/deletewish' method='POST'>
+    <form style="display:inline;" action='/wish/deletewish/' method='POST'>
         {% csrf_token %}
         <input type="hidden" name="itemid" value="{{wish.FK_item.id}}">
         <input type="hidden" name="userid" value="{{wish.FK_user.id}}">

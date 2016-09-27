@@ -6,14 +6,14 @@
 </head>
 <body>
     <div class="header">
-        <a href="/wish/dashboard">Home</a> |  
-            {% if request.session.user.username %}
-                {{request.session.user.username}} is logged in | 
+        <a href="/wish/dashboard/">Home</a> |  
+            {% if request.session.username %}
+                {{request.session.username}} is logged in | 
             {% endif %}
-        <a href="/logout">Logout</a>
+        <a href="/logout/">Logout</a>
     </div>
     <h1>Create a new wish list item</h1>
-    <form action="/wish/createitem" method="post">
+    <form action="/wish/createitem/" method="post">
         {% csrf_token %}
         <input type="hidden" name="userid" value="{{request.session.userid}}">
         <input type="text" name="itemname" size="20"><br>

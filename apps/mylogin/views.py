@@ -30,7 +30,7 @@ def register(request):
             request.session['username'] = user.username
             for message in res['success']:
                 messages.add_message(request, messages.SUCCESS, message)
-            return redirect('/success')
+            return redirect('/success/')
         else:
             for message in res['errors']:
                 messages.add_message(request, messages.ERROR, message)
@@ -49,7 +49,7 @@ def login(request):
             request.session['username'] = user.username
             for message in res['success']:
                 messages.add_message(request, messages.SUCCESS, message)
-            return redirect('/success')
+            return redirect('/success/')
         else:
             for message in res['errors']:
                 messages.add_message(request, messages.ERROR, message)
@@ -67,5 +67,5 @@ def delete(request, deleteid):
     user = Users.objects.get(id=deleteid)
     print user
     user.delete()
-    return redirect('/displayall')
+    return redirect('/displayall/')
     

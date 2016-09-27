@@ -6,13 +6,13 @@ from django.contrib import messages
 # Create your views here.
 def index(request):
     if not 'userid' in request.session:
-        return redirect('/login')
+        return redirect('/login/')
     else:
-        return redirect('/wish/dashboard')
+        return redirect('/wish/dashboard/')
 
 def dashboard(request):
     if not 'userid' in request.session:
-        return redirect('/login')
+        return redirect('/login/')
     you = Users.objects.get(id = request.session['userid'])
     userid = request.session['userid']
     context = {
@@ -25,16 +25,16 @@ def dashboard(request):
 def addwish(request):
     if request.method == 'POST':
         Wish.objects.makewish(request.POST)
-    return redirect('/wish/dashboard')
+    return redirect('/wish/dashboard/')
 
 def deletewish(request):
     if request.method == 'POST':
         Wish.objects.deletewish(request.POST)
-    return redirect('/wish/dashboard')
+    return redirect('/wish/dashboard/')
 
 def wishitem(request, itemid):
     if not 'userid' in request.session:
-        return redirect('/login')
+        return redirect('/login/')
     else:
         targetitem = Item.objects.get(id = itemid)
         wishedusers = Users.objects.filter(wish_user__FK_item = targetitem)
@@ -46,14 +46,14 @@ def wishitem(request, itemid):
 
 def create(request):
     if not 'userid' in request.session:
-        return redirect('/login')
+        return redirect('/login/')
     else:
         return render(request, 'wishapp/create_item.html')
 
 def deleteitem(request):
     if request.method == 'POST':
         Item.objects.deleteitem(request.POST)
-    return redirect('/wish/dashboard')
+    return redirect('/wish/dashboard/')
 
 def createitem(request):
     if request.method == 'POST':
@@ -61,20 +61,20 @@ def createitem(request):
         if res['success']:
             for message in res['success']:
                 messages.add_message(request, messages.SUCCESS, message)
-            return redirect('/wish/dashboard')
+            return redirect('/wish/dashboard/')
         elif res['errors']:
             for message in res['errors']:
                 messages.add_message(request, messages.ERROR, message)
-            return redirect('/wish/create')
+            return redirect('/wish/create/')
         else:
-            return redirect('/wish/dashboard')
+            return redirect('/wish/dashboard/')
     else:
-        return redirect('/wish/dashboard')
+        return redirect('/wish/dashboard/')
 
 def allwishes(request):
     if request.method == 'POST':
         Item.objects.makeitem(request.POST)
-        return redirect('/wish/dashboard')
+        return redirect('/wish/dashboard/')
     else:
         context = {
             'allwishes' : Wish.objects.all()
@@ -84,7 +84,7 @@ def allwishes(request):
 def allitems(request):
     if request.method == 'POST':
         Item.objects.makeitem(request.POST)
-        return redirect('/wish/dashboard')
+        return redirect('/wish/dashboard/')
     else:
         context = {
             'allitems' : Item.objects.all()

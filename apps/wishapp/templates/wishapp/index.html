@@ -6,11 +6,11 @@
 </head>
 <body>
     <div class="header">
-        <a href="/wish/dashboard">Home</a> |  
+        <a href="/wish/dashboard/">Home</a> |  
             {% if request.session.username %}
                 {{request.session.username}} is logged in | 
             {% endif %}
-        <a href="/logout">Logout</a>
+        <a href="/logout/">Logout</a>
     </div>
     <h2>Hello, {{request.session.name}}!</h2>
     
@@ -31,7 +31,7 @@
                 <td>{{yourwisheditem.FK_addedby.name}}</td>
                 <td>{{yourwisheditem.created_at}}</td>
                 <td>
-                    <form style="display:inline;" action='/wish/deletewish' method='POST'>
+                    <form style="display:inline;" action='/wish/deletewish/' method='POST'>
                         {% csrf_token %}
                         <input type="hidden" name="userid" value="{{request.session.userid}}">
                         <input type="hidden" name="itemid" value="{{yourwisheditem.id}}">
@@ -49,7 +49,7 @@
                 <td>{{youritem.FK_addedby.name}}</td>
                 <td>{{youritem.created_at}}</td>
                 <td>
-                    <form style="display:inline;" action='/wish/deleteitem' method='POST'>
+                    <form style="display:inline;" action='/wish/deleteitem/' method='POST'>
                         {% csrf_token %}
                         <input type="hidden" name="userid" value="{{request.session.userid}}">
                         <input type="hidden" name="itemid" value="{{youritem.id}}">
@@ -77,7 +77,7 @@
                         <td>{{othersitem.FK_addedby.name}}</td>
                         <td>{{othersitem.created_at}}</td>
                         <td>
-                            <form action='/wish/addwish' method='POST'>
+                            <form action='/wish/addwish/' method='POST'>
                                 {% csrf_token %}
                                 <input type='hidden' name='userid' value="{{request.session.userid}}">
                                 <input type='hidden' name='itemid' value="{{othersitem.id}}">
@@ -88,7 +88,7 @@
                 {% endfor %}
             </tbody>
         </table>
-    <a href="/wish/create"><button style="margin:40px 0px 0px 320px;">Add Item</button></a>
+    <a href="/wish/create/"><button style="margin:40px 0px 0px 320px;">Add Item</button></a>
     <div>
         {% if messages %}
         <h3>Messages</h3>

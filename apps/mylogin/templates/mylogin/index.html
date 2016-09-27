@@ -29,16 +29,16 @@
 <body>
     <div class="wrapper">
         <div class="header">
-            <a href="/wish/dashboard">Home</a> |  
-                {% if request.session.user.username %}
-                    {{request.session.user.username}} is logged in | 
+            <a href="/wish/dashboard/">Home</a> |  
+                {% if request.session.username %}
+                    {{request.session.username}} is logged in | 
                 {% endif %}
-            <a href="/logout">Logout</a>
+            <a href="/logout/">Logout</a>
         </div>
         <h2>Welcome, please register or login.</h3>
         <div class="registerdiv">
             <h3 style="background:white;padding: 15px;margin-top:-45px; margin-left:-20px;width:60px;">Register</h4>
-            <form action="/register" method="POST">
+            <form action="/register/" method="POST">
                 <table>
                     {% csrf_token %}
                     <tr>
@@ -65,7 +65,7 @@
         </div>
         <div class="logindiv">
             <h3 style="background:white;padding: 15px;margin-top:-45px; margin-left:-20px;width:45px;">Login</h4>
-            <form action="/login" method="POST">
+            <form action="/login/" method="POST">
                 <table>
                         {% csrf_token %}
                     <tr>

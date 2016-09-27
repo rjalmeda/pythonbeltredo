@@ -6,11 +6,11 @@
 </head>
 <body>
     <div class="header">
-        <a href="/wish/dashboard">Home</a> |  
-            {% if request.session.user.username %}
-                {{request.session.user.username}} is logged in | 
+        <a href="/wish/dashboard/">Home</a> |  
+            {% if request.session.username %}
+                {{request.session.username}} is logged in | 
             {% endif %}
-        <a href="/logout">Logout</a>
+        <a href="/logout/">Logout</a>
     </div>
     <h2>{{item.name}}</h2>
     <p style="text-decoration:underline;">Users who added this product/item under their wish list:</p>
